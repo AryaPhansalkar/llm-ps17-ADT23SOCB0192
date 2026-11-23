@@ -1,0 +1,335 @@
+:root {
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --text: #1c1b19;
+  --muted: #6a6862;
+  --line: #e3e1da;
+  --line-strong: #c9c6bc;
+  --accent: #27557e;
+  --hover: #f1efe9;
+
+  --high: #a3301d;
+  --high-soft: #fbe9e5;
+  --medium: #7a5200;
+  --medium-soft: #f8edd3;
+  --low: #4f4d48;
+  --low-soft: #edebe5;
+
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Consolas, 'Liberation Mono', monospace;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151514;
+    --surface: #1e1e1c;
+    --text: #ecebe6;
+    --muted: #9c9a92;
+    --line: #31302c;
+    --line-strong: #4a4943;
+    --accent: #8fbde6;
+    --hover: #272725;
+
+    --high: #f3a091;
+    --high-soft: #3a1f1a;
+    --medium: #e8c26a;
+    --medium-soft: #33290f;
+    --low: #c4c2ba;
+    --low-soft: #2b2b28;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+p,
+dl,
+dd {
+  margin: 0;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Layout: header, scrolling conversation, input at the bottom ---------- */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 22px 20px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+h1 {
+  font-size: 1.25rem;
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.app-header p {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.messages {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.composer {
+  padding: 12px 20px 20px;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- Messages ---------- */
+
+.bubble {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  overflow-wrap: anywhere;
+}
+
+.bubble.bot {
+  align-self: flex-start;
+  border: 1px solid var(--line);
+  border-bottom-left-radius: 4px;
+  background: var(--surface);
+}
+
+.bubble.user {
+  align-self: flex-end;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  border-bottom-right-radius: 4px;
+  background: var(--text);
+  color: var(--bg);
+  white-space: pre-wrap;
+}
+
+.bubble.pending {
+  color: var(--muted);
+}
+
+.bubble.problem {
+  border-color: transparent;
+  background: var(--high-soft);
+  color: var(--high);
+}
+
+/* Label-and-value lists: the details being reviewed, and the receipt. */
+.details {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px 16px;
+}
+
+.details dt {
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+
+.multiline {
+  white-space: pre-wrap;
+}
+
+.receipt {
+  min-width: min(100%, 320px);
+  padding: 14px 16px 16px;
+}
+
+.receipt-label {
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.receipt-id {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.urgency {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 4px;
+  background: var(--low-soft);
+  color: var(--low);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.urgency.high {
+  background: var(--high-soft);
+  color: var(--high);
+}
+
+.urgency.medium {
+  background: var(--medium-soft);
+  color: var(--medium);
+}
+
+/* ---------- Input and buttons ---------- */
+
+.composer-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.composer-form input,
+.composer-form textarea {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  line-height: 1.5;
+}
+
+.composer-form textarea {
+  resize: none;
+}
+
+.composer-form input::placeholder,
+.composer-form textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.75;
+}
+
+.composer-form input:focus-visible,
+.composer-form textarea:focus-visible {
+  outline-offset: -1px;
+  border-color: transparent;
+}
+
+.primary,
+.secondary {
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-weight: 550;
+  white-space: nowrap;
+}
+
+.primary {
+  border: 1px solid var(--text);
+  background: var(--text);
+  color: var(--bg);
+}
+
+.primary:disabled {
+  opacity: 0.4;
+}
+
+.secondary {
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+}
+
+.secondary:hover {
+  background: var(--hover);
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.choices button {
+  flex: 1;
+}
+
+.link-button {
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.8;
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+}
+
+.link-button:hover {
+  color: var(--text);
+}
+
+@media (max-width: 480px) {
+  .app-header,
+  .messages,
+  .composer {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .bubble {
+    max-width: 92%;
+  }
+}

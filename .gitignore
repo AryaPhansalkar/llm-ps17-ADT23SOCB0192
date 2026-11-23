@@ -1,0 +1,14 @@
+# Secrets: never commit the API key
+.env
+
+# Python
+.venv/
+__pycache__/
+.ruff_cache/
+
+# Node
+node_modules/
+dist/
+
+# Saved complaints contain names and room numbers
+server/data/

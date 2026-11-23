@@ -1,0 +1,6 @@
+# Runtime dependencies, pinned so every install gets the versions this was tested with.
+anthropic==2.12.0
+Django==6.1.3
+djangorestframework==3.18.3
+filelock==4.2.12
+python-dotenv==1.2.4
